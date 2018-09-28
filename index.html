@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  <script src="main.js"></script>
+</head>
+
+<body>
+  <script src="http://localhost:1989/socket.io/socket.io.js"></script>
+  <script>
+    var socket;
+    var packet;
+
+    function connect() {
+      console.log('sent request to socket');
+      packet = {
+        event: "online",
+        payload: {
+          username: 'abcd',
+          name: 'Chandan Kumar'
+        }
+      }
+      socket = io.connect('http://localhost:1989');
+      socket.emit(packet.event, packet.payload);
+    }
+
+
+    function sendMessage() {
+      packet = {
+        event: 'message',
+        payload: {
+          from: 'abcd',
+          to: 'wxyz',
+          text: 'kahan marwa raha hai abhi tak'
+        }
+      }
+      console.log('clicked to send message')
+      socket.emit(packet.event, packet.payload);
+    }
+  </script>
+  <div onclick="connect()">connect</div>
+  <div onclick="sendMessage()">send message</div>
+</body>
+
+</html>
