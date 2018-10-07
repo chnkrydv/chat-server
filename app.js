@@ -12,10 +12,9 @@ function onHttpStartListen() {
 function onIoConnection(socket) {
   console.log('Client connected to socket');
 
-  socket.on('online', sockets.onClientOnline(socket));
-  socket.on('needClientsList', sockets.sendClientsList(socket));
-  socket.on('message', sockets.sendToReciever(socket));
-  socket.on('disconnect', sockets.onClientOffline(socket));
+  socket.on('online', sockets.onClientOnline(socket, io));
+  socket.on('message', sockets.sendToReciever(socket, io));
+  socket.on('disconnect', sockets.onClientOffline(socket, io));
 }
 
 io.on('connection', onIoConnection);
